@@ -34,6 +34,7 @@ def display():
 
 def parentDir():
     global userInput
+    print("jnlknl")
 
 
 
