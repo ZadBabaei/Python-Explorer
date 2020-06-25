@@ -34,9 +34,10 @@ def display():
 
 def parentDir():
     global userInput
-    print("jnlknl")
-
-
+    myDir = getcwd()
+    parentDir=Path(myDir).parent
+    print(parentDir)
+    main()
 
 
 def pwd():
@@ -44,7 +45,6 @@ def pwd():
     currentDir=getcwd()
     print(currentDir)
     userInput = input(":>")
-
 
 def subDir():
     global userInput
@@ -54,9 +54,7 @@ def subDir():
     myDir = getcwd()
     chdir( myDir + "\\" + userInput )
     print( getcwd() )
-
-    userInput = input( ":>" )
-
+    main()
 
 def checkUserInput():
     global userInput
@@ -86,7 +84,7 @@ def checkUserInput():
                 userInput = "cdSub"
                 checkTrue = False
 
-        elif userInput != "pwd" or userInput != "ls" or userInput != "du" or userInput != "x":
+        elif userInput !="pwd" or userInput !="ls" or userInput !="du" or userInput !="x":
             print( "Unknown entry\nPlease try again" )
             userInput = input( ":>" )
         else:
@@ -101,5 +99,7 @@ def main():
         pwd()
     elif userInput=="cdSub":
         subDir()
+    elif userInput=="cdParent":
+        parentDir()
 
 main()
