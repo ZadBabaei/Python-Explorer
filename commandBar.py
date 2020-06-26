@@ -2,21 +2,7 @@
 
 from os import *
 from pathlib import *
-# print(getcwd())
-# chdir("D:\MEHRZAD\Programing\python\python-command-bar01\sahand")
-# print(getcwd())
-# chdir("D:\MEHRZAD\Programing\python\python-command-bar01\zad")
-# print(getcwd())
-#
-# userInput="sahand"
-# chdir("D:\MEHRZAD\Programing\python\python-command-bar01\\"+userInput)
-# print(getcwd())
-# myDir=getcwd()
-#
-# print(myDir)
-# reza=Path(myDir).parent
-# print("_------------")
-# print(reza)
+
 userInput = "none"
 originalUserInput="none"
 def display():
@@ -29,77 +15,104 @@ def display():
     print("To see the content of a folder type 'ls'\n")
     print("To see the size of all files and folders under the current directory type 'du'\n")
     print("To exit this command bar type 'x'\n")
-    userInput = input( ":>" )
-    originalUserInput=userInput
 
-def parentDir():
-    global userInput
-    myDir = getcwd()
-    parentDir=Path(myDir).parent
-    print(parentDir)
-    main()
+stillGoOn=True
+while stillGoOn:
+    def parentDir():
+        global userInput
+        myDir = getcwd()
+        parentDir=Path(myDir).parent
+        chdir(parentDir)
+        print(parentDir)
+        main()
 
 
-def pwd():
-    global userInput
-    currentDir=getcwd()
-    print(currentDir)
-    userInput = input(":>")
+    def pwd():
+        global userInput
+        currentDir=getcwd()
+        print(currentDir)
+        main()
 
-def subDir():
-    global userInput
-    global originalUserInput
-    userInput = originalUserInput[3:]
 
-    myDir = getcwd()
-    chdir( myDir + "\\" + userInput )
-    print( getcwd() )
-    main()
+    def subDir():
+        global userInput
+        global originalUserInput
+        myDir = getcwd()
+        content=walk(myDir).__next__()[1]
+        userInput = originalUserInput[3:]
+        myDir = getcwd()
+        if userInput in content:
+            chdir( myDir + "\\" + userInput )
+            print( getcwd() )
+            main()
+        else:
+            print("There is no folder by that name please try again")
+            main()
 
-def checkUserInput():
-    global userInput
-    mylist = []
-    for i in range( len( userInput ) ):
-        if userInput[i] == " ":
-            mylist.append( i )
-    if len( mylist ) == 0:
-        mylist.append( 0 )
 
-    checkTrue = True
-    while checkTrue:
-        if userInput[0] == "c" and userInput[1] == "d":
-            if mylist[0] != 2:
-                if len( userInput ) != 4:
-                    print( "Unknown entry\nPlease try again" )
-                    userInput = input( ":>" )
-                else:
-                    if userInput[2] != "." and userInput[3] != ".":
+    def checkUserInput():
+        global userInput
+        mylist = []
+        for i in range( len( userInput ) ):
+            if userInput[i] == " ":
+                mylist.append( i )
+        if len( mylist ) == 0:
+            mylist.append( 0 )
+
+        checkTrue = True
+        while checkTrue:
+            if userInput[0] == "c" and userInput[1] == "d":
+                if mylist[0] != 2:
+                    if len( userInput ) != 4:
                         print( "Unknown entry\nPlease try again" )
                         userInput = input( ":>" )
                     else:
-                        userInput = "cdParent"
-                        checkTrue = False
-                        print( userInput )
-            elif mylist[0] == 2:
-                userInput = "cdSub"
+                        if userInput[2] != "." and userInput[3] != ".":
+                            print( "Unknown entry\nPlease try again" )
+                            userInput = input( ":>" )
+                        else:
+                            userInput = "cdParent"
+                            checkTrue = False
+                            return userInput
+                elif mylist[0] == 2:
+                    userInput = "cdSub"
+                    checkTrue = False
+
+            elif userInput !="pwd" and userInput !="ls" and userInput !="du" and userInput !="x":
+                print( "Unknown entry\nPlease try again" )
+                userInput = input( ":>" )
+            else:
                 checkTrue = False
-
-        elif userInput !="pwd" or userInput !="ls" or userInput !="du" or userInput !="x":
-            print( "Unknown entry\nPlease try again" )
-            userInput = input( ":>" )
-        else:
-            checkTrue = False
-    return userInput
+        return userInput
 
 
-def main():
+    def listOfContent():
+        mydir = getcwd()
+        entries = listdir( mydir )
+        print( entries )
+        for entry in entries:
+            print( entry )
+        main()
+
+
+    def main():
+        global userInput
+        global originalUserInput
+        global stillGoOn
+        userInput = input( ":>" )
+        originalUserInput = userInput
+        checkUserInput()
+        if userInput=="pwd":
+            pwd()
+        elif userInput=="cdSub":
+            subDir()
+        elif userInput=="cdParent":
+            parentDir()
+        elif userInput=="ls":
+            listOfContent()
+        elif userInput=="x":
+            stillGoOn=False
+
+
     display()
-    checkUserInput()
-    if userInput=="pwd":
-        pwd()
-    elif userInput=="cdSub":
-        subDir()
-    elif userInput=="cdParent":
-        parentDir()
-
-main()
+    main()
