@@ -10,7 +10,7 @@ def display():
     global originalUserInput
     print("--------------This is a python command bar--------------\n")
     print("To show the current directory enter 'pwd'\n")
-    print("To go to a subdirectory type 'cd+the directory's name'\n")
+    print("To go to a subdirectory type 'cd+a space + the directory's name'ex:cd New folder\n")
     print("To go back to the parent directory type 'cd+..'\n")
     print("To see the content of a folder type 'ls'\n")
     print("To see the size of all files and folders under the current directory type 'du'\n")
