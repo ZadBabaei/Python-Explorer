@@ -95,6 +95,10 @@ while stillGoOn:
         main()
 
 
+    def du():
+        None
+
+
     def main():
         global userInput
         global originalUserInput
