@@ -97,9 +97,12 @@ while stillGoOn:
 
     def du():
         mylist=[]
+        sizeOfthidDir=[]
         for i in mylist:
             def recursive():
                 global mylist
+                global sizeOfthidDir
+
 
 
 
