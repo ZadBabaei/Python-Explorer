@@ -96,7 +96,11 @@ while stillGoOn:
 
 
     def du():
-        None
+        mylist=[]
+        for i in mylist:
+            def recursive():
+                global mylist
+
 
 
     def main():
