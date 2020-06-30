@@ -114,7 +114,7 @@ while stillGoOn:
         def get_dir_size(start_path='.'):
             total_size = 0
             if 'scandir' in dir(  ):
-                # using fast 'os.scandir' method (new in version 3.5)
+              
                 for entry in scandir( start_path ):
                     if entry.is_dir( follow_symlinks=False ):
                         total_size += get_dir_size( entry.path )
