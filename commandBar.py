@@ -97,7 +97,6 @@ while stillGoOn:
             print( entry )
         main()
 
-
     def du():
         def null_decorator(ob):
             # global os
