@@ -1,5 +1,8 @@
 # This program works as a simple command bar using python
+from __future__ import print_function
 
+import sys
+import operator
 from os import *
 from pathlib import *
 
@@ -96,14 +99,88 @@ while stillGoOn:
 
 
     def du():
-        mylist=[]
-        sizeOfthidDir=[]
-        for i in mylist:
-            def recursive():
-                global mylist
-                global sizeOfthidDir
 
 
+        def null_decorator(ob):
+            # global os
+            return ob
+
+        if sys.version_info >= (3, 2, 0):
+            import functools
+            my_cache_decorator = functools.lru_cache( maxsize=4096 )
+        else:
+            my_cache_decorator = null_decorator
+
+        start_dir = path.normpath(path.abspath( sys.argv[1] ) ) if len( sys.argv ) > 1 else '.'
+
+        @my_cache_decorator
+        def get_dir_size(start_path='.'):
+            total_size = 0
+            if 'scandir' in dir(  ):
+                # using fast 'os.scandir' method (new in version 3.5)
+                for entry in scandir( start_path ):
+                    if entry.is_dir( follow_symlinks=False ):
+                        total_size += get_dir_size( entry.path )
+                    elif entry.is_file( follow_symlinks=False ):
+                        total_size += entry.stat().st_size
+            else:
+                # using slow, but compatible 'os.listdir' method
+                for entry in listdir( start_path ):
+                    full_path = path.abspath( path.join( start_path, entry ) )
+                    if path.islink( full_path ):
+                        continue
+                    if path.isdir( full_path ):
+                        total_size += get_dir_size( full_path )
+                    elif path.isfile( full_path ):
+                        total_size += path.getsize( full_path )
+            return total_size
+
+        def get_dir_size_walk(start_path='.'):
+            total_size = 0
+            for dirpath, dirnames, filenames in os.walk( start_path ):
+                for f in filenames:
+                    fp = path.join( dirpath, f )
+                    total_size += os.path.getsize( fp )
+            return total_size
+
+        def bytes2human(n, format='%(value).0f%(symbol)s', symbols='customary'):
+
+            SYMBOLS = {
+                'customary': ('B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'),
+                'customary_ext': ('byte', 'kilo', 'mega', 'giga', 'tera', 'peta', 'exa',
+                                  'zetta', 'iotta'),
+                'iec': ('Bi', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi', 'Yi'),
+                'iec_ext': ('byte', 'kibi', 'mebi', 'gibi', 'tebi', 'pebi', 'exbi',
+                            'zebi', 'yobi'),
+            }
+            n = int( n )
+            if n < 0:
+                raise ValueError( "n < 0" )
+            symbols = SYMBOLS[symbols]
+            prefix = {}
+            for i, s in enumerate( symbols[1:] ):
+                prefix[s] = 1 << (i + 1) * 10
+            for symbol in reversed( symbols[1:] ):
+                if n >= prefix[symbol]:
+                    value = float( n ) / prefix[symbol]
+                    return format % locals()
+            return format % dict( symbol=symbols[0], value=n )
+
+        if __name__ == '__main__':
+            dir_tree = {}
+            ### version, that uses 'slow' [os.walk method]
+            # get_size = get_dir_size_walk
+            ### this recursive version can benefit from caching the function calls (functools.lru_cache)
+            get_size = get_dir_size
+
+            for root, dirs, files in walk( start_dir ):
+                for d in dirs:
+                    dir_path = path.join( root, d )
+                    if path.isdir( dir_path ):
+                        dir_tree[dir_path] = get_size( dir_path )
+
+            for d, size in sorted( dir_tree.items(), key=operator.itemgetter( 1 ), reverse=True ):
+                print( '%s\t%s' % (bytes2human( size, format='%(value).2f%(symbol)s' ), d) )
 
 
     def main():
@@ -121,6 +198,9 @@ while stillGoOn:
             parentDir()
         elif userInput=="ls":
             listOfContent()
+        elif userInput=="du":
+            du()
+
         elif userInput=="x":
             stillGoOn=False
 
