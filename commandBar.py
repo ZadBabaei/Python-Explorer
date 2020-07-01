@@ -97,7 +97,35 @@ while stillGoOn:
             print( entry )
         main()
 
-   def du():
+    def du():
+        def getpath():
+            dir = getcwd()
+            foldersiaze( dir )
+
+        def foldersiaze(dir):
+            size = 0
+            myDir = getcwd()
+            allFiles = walk( myDir ).__next__()[2]
+            allFolderds = walk( myDir ).__next__()[1]
+            print( allFiles )
+            print( allFolderds )
+            for files in allFiles:
+                size += path.getsize( files )
+            print( size )
+
+            for folders in allFolderds:
+                chdir( myDir + "\\" + folders )
+
+                if len( allFolderds ) == 0:
+                    for files in allFiles:
+                        size += path.getsize( files )
+                    print( size )
+                else:
+                    dir = getcwd()
+                    size += foldersiaze( dir )
+                print( size )
+
+        getpath()
 
 
 
