@@ -104,19 +104,7 @@ while stillGoOn:
             dir = getcwd()
             foldersize( dir )
 
-        #         for files in allFiles:
-        #             size += path.getsize( files )
-        #         print( size )
-        #
-        #         if len(allFolderds)==0:
-        #             for files in allFiles:
-        #                 size += path.getsize( files )
-        #             print( size )
-        #         else:
-        #             chdir( myDir + "\\" + folders )
-        #             dir = getcwd()
-        #             size+=foldersiaze(dir)
-        #         print(size)
+
 
         def getFolderNmae():
             dir = getcwd()
