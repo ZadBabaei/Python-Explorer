@@ -104,15 +104,6 @@ while stillGoOn:
             dir = getcwd()
             foldersize( dir )
 
-        # def foldersiaze(dir):
-        #     size=0
-        #     myDir = getcwd()
-        #     allFiles = walk( myDir ).__next__()[2]
-        #     allFolderds=walk(myDir).__next__()[1]
-        #     print( allFiles )
-        #     print(allFolderds)
-        #
-        #     for folders in allFolderds:
         #         for files in allFiles:
         #             size += path.getsize( files )
         #         print( size )
