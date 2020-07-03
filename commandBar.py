@@ -98,11 +98,47 @@ while stillGoOn:
         main()
 
     def du():
+
+
         def getpath():
             dir = getcwd()
-            foldersiaze( dir )
+            foldersize( dir )
 
-        def foldersiaze(dir):
+        # def foldersiaze(dir):
+        #     size=0
+        #     myDir = getcwd()
+        #     allFiles = walk( myDir ).__next__()[2]
+        #     allFolderds=walk(myDir).__next__()[1]
+        #     print( allFiles )
+        #     print(allFolderds)
+        #
+        #     for folders in allFolderds:
+        #         for files in allFiles:
+        #             size += path.getsize( files )
+        #         print( size )
+        #
+        #         if len(allFolderds)==0:
+        #             for files in allFiles:
+        #                 size += path.getsize( files )
+        #             print( size )
+        #         else:
+        #             chdir( myDir + "\\" + folders )
+        #             dir = getcwd()
+        #             size+=foldersiaze(dir)
+        #         print(size)
+
+        def getFolderNmae():
+            dir = getcwd()
+            print( dir )
+            mylist = []
+            for i in range( len( dir ) ):
+                if dir[i] == "\\":
+                    mylist.append( i )
+            foldername = dir[mylist[-1] + 1:]
+            # return foldername
+            foldersize( foldername )
+
+        def foldersize(foldername):
             size = 0
             myDir = getcwd()
             allFiles = walk( myDir ).__next__()[2]
@@ -113,20 +149,13 @@ while stillGoOn:
                 size += path.getsize( files )
             print( size )
 
-            for folders in allFolderds:
-                chdir( myDir + "\\" + folders )
+            if len( allFolderds ) == 0:
+                return size
+            else:
+                for folders in allFolderds:
+                    chdir()
 
-                if len( allFolderds ) == 0:
-                    for files in allFiles:
-                        size += path.getsize( files )
-                    print( size )
-                else:
-                    dir = getcwd()
-                    size += foldersiaze( dir )
-                print( size )
-
-        getpath()
-
+        getFolderNmae()
 
 
     def main():
