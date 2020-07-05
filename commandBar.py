@@ -131,8 +131,6 @@ while stillGoOn:
                     allFiles = walk( currentDir ).__next__()[2]
                     for files in allFiles:
                         size += path.getsize( files )
-
-
                     allFolderds = walk( currentDir ).__next__()[1]
                     # print( "the current directory is :" )
                     # print( currentDir )
@@ -144,7 +142,8 @@ while stillGoOn:
             return size
 
         getFolderNmae()
-        print(size)
+        sizeInMb=size/1024
+        print("The size of this directory is equal to %s bytes or %.2f MB "%(size,sizeInMb))
         main()
 
 
