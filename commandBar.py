@@ -102,14 +102,11 @@ while stillGoOn:
     def du():
         global size
         size = 0
-
-
+        # this function finds the name of the current folder and extracts it from the path of the directory
         def getFolderNmae():
             global size
             global foldername
-
             dir = getcwd()
-
             mylist = []
             for i in range( len( dir ) ):
                 if dir[i] == "\\":
@@ -120,12 +117,9 @@ while stillGoOn:
 
         def printFolder(foldername):
             global size
-
             myDir = getcwd()
             allFiles = walk( myDir ).__next__()[2]
             allFolderds = walk( myDir ).__next__()[1]
-            # print(allFiles)
-            # print(allFolderds)
             if len( allFolderds ) == 0:
                 return
             else:
@@ -137,7 +131,7 @@ while stillGoOn:
                     allFiles = walk( currentDir ).__next__()[2]
                     for files in allFiles:
                         size += path.getsize( files )
-                        # print( size )
+
 
                     allFolderds = walk( currentDir ).__next__()[1]
                     # print( "the current directory is :" )
