@@ -100,43 +100,59 @@ while stillGoOn:
         main()
 
     def du():
-
-
-        def getpath():
-            dir = getcwd()
-            foldersize( dir )
-
+        global size
+        size = 0
 
 
         def getFolderNmae():
+            global size
+            global foldername
+
             dir = getcwd()
-            print( dir )
+
             mylist = []
             for i in range( len( dir ) ):
                 if dir[i] == "\\":
                     mylist.append( i )
             foldername = dir[mylist[-1] + 1:]
-            # return foldername
-            foldersize( foldername )
+            printFolder( foldername )
+            return foldername
 
-        def foldersize(foldername):
-            size = 0
+        def printFolder(foldername):
+            global size
+
             myDir = getcwd()
             allFiles = walk( myDir ).__next__()[2]
             allFolderds = walk( myDir ).__next__()[1]
-            print( allFiles )
-            print( allFolderds )
-            for files in allFiles:
-                size += path.getsize( files )
-            print( size )
-
+            # print(allFiles)
+            # print(allFolderds)
             if len( allFolderds ) == 0:
-                return size
+                return
             else:
-                for folders in allFolderds:
-                    chdir()
+                for folder in allFolderds:
+                    # currentDir = getcwd()
+                    chdir( myDir + "\\" + folder )
+                    currentDir = getcwd()
+
+                    allFiles = walk( currentDir ).__next__()[2]
+                    for files in allFiles:
+                        size += path.getsize( files )
+                        # print( size )
+
+                    allFolderds = walk( currentDir ).__next__()[1]
+                    # print( "the current directory is :" )
+                    # print( currentDir )
+                    # print( "the list of all files inside this folder is:" )
+                    # print( allFiles )
+                    # print( "the list of all folders inside the current folder is:" )
+                    # print( allFolderds )
+                    getFolderNmae()
+            return size
 
         getFolderNmae()
+        print(size)
+        main()
+
 
 
     def main():
