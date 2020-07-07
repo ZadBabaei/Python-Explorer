@@ -83,7 +83,8 @@ while stillGoOn:
                     userInput = "cdSub"
                     checkTrue = False
 
-            elif userInput !="pwd" and userInput !="ls" and userInput !="du" and userInput !="x":
+            elif userInput !="pwd" and userInput !="ls" and userInput !="du" and userInput !="x" and userInput !="tree"\
+                    and userInput !="rm":
                 print( "Unknown entry\nPlease try again" )
                 userInput = input( ":>" )
             else:
@@ -114,7 +115,7 @@ while stillGoOn:
             foldername = dir[mylist[-1] + 1:]
             printFolder( foldername )
             return foldername
-
+        # this function prints all files and folders in a directory as a list and calculates the sum of files
         def printFolder(foldername):
             global size
             myDir = getcwd()
@@ -124,10 +125,8 @@ while stillGoOn:
                 return
             else:
                 for folder in allFolderds:
-                    # currentDir = getcwd()
                     chdir( myDir + "\\" + folder )
                     currentDir = getcwd()
-
                     allFiles = walk( currentDir ).__next__()[2]
                     for files in allFiles:
                         size += path.getsize( files )
@@ -146,6 +145,69 @@ while stillGoOn:
         print("The size of this directory is equal to %s bytes or %.2f MB "%(size,sizeInMb))
         main()
 
+    def rm():
+        pass
+
+    def tree():
+        def fName():
+            global foldername
+
+            dir = getcwd()
+
+            mylist = []
+            for i in range( len( dir ) ):
+                if dir[i] == "\\":
+                    mylist.append( i )
+            foldername = dir[mylist[-1] + 1:]
+            printFolder( foldername )
+            return foldername
+
+        def printFolder(foldername):
+            global size
+
+            myDir = getcwd()
+            allFiles = walk( myDir ).__next__()[2]
+            allFolderds = walk( myDir ).__next__()[1]
+            # print(allFiles)
+            # print(allFolderds)
+            if len( allFolderds ) == 0:
+                return
+            else:
+                for folder in allFolderds:
+                    # currentDir = getcwd()
+                    chdir( myDir + "\\" + folder )
+                    currentDir = getcwd()
+
+                    allFiles = walk( currentDir ).__next__()[2]
+                    # for files in allFiles:
+                    #         size += path.getsize( files )
+                    #         # print( size )
+
+                    allFolderds = walk( currentDir ).__next__()[1]
+                    print( "the current directory is :" )
+
+                    print( currentDir )
+                    print()
+                    print( "The list of all files inside this folder is:" )
+                    if len( allFiles ) != 0:
+                        for i in allFiles:
+                            print( "--", i )
+                    else:
+                        print( " " * 5, "There is no file in this folder" )
+                    print()
+                    print( "The list of all folders inside the current folder is:" )
+                    if len( allFolderds ) != 0:
+                        for j in allFolderds:
+                            print( "--", j )
+                    else:
+                        print( " " * 5, "There is no other folder in this folder" )
+                    print()
+
+                    fName()
+            # return size
+
+        fName()
+        main()
 
 
     def main():
@@ -153,6 +215,7 @@ while stillGoOn:
         global originalUserInput
         global stillGoOn
         userInput = input( ":>" )
+        userInput=userInput.lower()
         originalUserInput = userInput
         checkUserInput()
         if userInput=="pwd":
@@ -165,7 +228,10 @@ while stillGoOn:
             listOfContent()
         elif userInput=="du":
             du()
-
+        elif userInput=="rm":
+            rm()
+        elif userInput=="tree":
+            tree()
         elif userInput=="x":
             stillGoOn=False
 
