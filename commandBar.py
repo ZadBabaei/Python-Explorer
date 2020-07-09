@@ -18,7 +18,7 @@ def display():
     print("To see the content of a folder type 'ls'\n")
     print("To see the size of all files and folders under the current directory type 'du'\n")
     print("To remove the current directory type'rm'\n")
-    print("To see the tree from of file and folders of this directory type ''tree\n")
+    print("To see the tree form of file and folders of this directory type 'tree'\n")
     print("To exit this command bar type 'x'\n")
 
 stillGoOn=True
