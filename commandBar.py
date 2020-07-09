@@ -146,69 +146,40 @@ while stillGoOn:
         main()
 
     def rm():
-        pass
-
-    def tree():
-        def fName():
-            global foldername
-
-            dir = getcwd()
-
-            mylist = []
-            for i in range( len( dir ) ):
-                if dir[i] == "\\":
-                    mylist.append( i )
-            foldername = dir[mylist[-1] + 1:]
-            printFolder( foldername )
-            return foldername
-
-        def printFolder(foldername):
-            global size
-
+        def removeFiles():
             myDir = getcwd()
+            print( myDir )
             allFiles = walk( myDir ).__next__()[2]
-            allFolderds = walk( myDir ).__next__()[1]
-            # print(allFiles)
-            # print(allFolderds)
-            if len( allFolderds ) == 0:
-                return
-            else:
-                for folder in allFolderds:
-                    # currentDir = getcwd()
-                    chdir( myDir + "\\" + folder )
-                    currentDir = getcwd()
+            chdir( myDir + "\\" + "New folder (2)" )
+            cuerrentDir = getcwd()
 
-                    allFiles = walk( currentDir ).__next__()[2]
-                    # for files in allFiles:
-                    #         size += path.getsize( files )
-                    #         # print( size )
+            allFiles2 = walk( cuerrentDir ).__next__()[2]
 
-                    allFolderds = walk( currentDir ).__next__()[1]
-                    print( "the current directory is :" )
+            for files in allFiles2:
+                remove( cuerrentDir + "\\" + files )
 
-                    print( currentDir )
-                    print()
-                    print( "The list of all files inside this folder is:" )
-                    if len( allFiles ) != 0:
-                        for i in allFiles:
-                            print( "--", i )
-                    else:
-                        print( " " * 5, "There is no file in this folder" )
-                    print()
-                    print( "The list of all folders inside the current folder is:" )
-                    if len( allFolderds ) != 0:
-                        for j in allFolderds:
-                            print( "--", j )
-                    else:
-                        print( " " * 5, "There is no other folder in this folder" )
-                    print()
+            removeFiles()
+            main()
 
-                    fName()
-            # return size
 
-        fName()
-        main()
+    def tree(folder, hyphens):
+        chdir( folder )
+        print( hyphens, folder )
+        allFolderds = walk( folder ).__next__()[1]
+        if len( allFolderds ) != 0:
+            for i in allFolderds:
+                subFolderPath = folder + "\\" + i
+                tree( subFolderPath, hyphens + "--" )
+        allFiles = walk( folder ).__next__()[2]
+        hyphens += '--'
 
+        if len( allFiles ) != 0:
+            for i in allFiles:
+                print( hyphens, i )
+        chdir( ".." )
+
+
+    tree( getcwd(), "" )
 
     def main():
         global userInput
