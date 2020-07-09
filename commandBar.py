@@ -131,12 +131,7 @@ while stillGoOn:
                     for files in allFiles:
                         size += path.getsize( files )
                     allFolderds = walk( currentDir ).__next__()[1]
-                    # print( "the current directory is :" )
-                    # print( currentDir )
-                    # print( "the list of all files inside this folder is:" )
-                    # print( allFiles )
-                    # print( "the list of all folders inside the current folder is:" )
-                    # print( allFolderds )
+
                     getFolderNmae()
             return size
 
