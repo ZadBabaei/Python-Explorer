@@ -197,7 +197,7 @@ while stillGoOn:
         elif userInput=="rm":
             rm()
         elif userInput=="tree":
-            tree()
+            tree( getcwd(), "" )
         elif userInput=="x":
             stillGoOn=False
 
