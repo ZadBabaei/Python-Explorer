@@ -18,7 +18,7 @@ This code uses certain command as user input and perform some task based on thos
 "To see the content of a folder type 'ls'
 "To see the size of all files and folders under the current directory type 'du'
 "To remove the current directory type'rm'
-"To see the tree from of file and folders of this directory type 'tree'
+"To see the tree form of file and folders of this directory type 'tree'
 "To exit this command bar type 'x'
 ```
 
