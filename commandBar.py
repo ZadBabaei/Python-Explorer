@@ -91,7 +91,7 @@ while stillGoOn:
                 checkTrue = False
         return userInput
 
-
+# this function will print out the list of all file and folders in the current directory
     def listOfContent():
         mydir = getcwd()
         entries = listdir( mydir )
@@ -113,10 +113,10 @@ while stillGoOn:
                 if dir[i] == "\\":
                     mylist.append( i )
             foldername = dir[mylist[-1] + 1:]
-            printFolder( foldername )
+            folderSize( foldername )
             return foldername
         # this function prints all files and folders in a directory as a list and calculates the sum of files
-        def printFolder(foldername):
+        def folderSize(foldername):
             global size
             myDir = getcwd()
             allFiles = walk( myDir ).__next__()[2]
