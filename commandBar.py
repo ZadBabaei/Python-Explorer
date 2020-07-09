@@ -156,25 +156,28 @@ while stillGoOn:
             removeFiles()
             main()
 
+    def prinTree():
+        def tree(folder, hyphens):
+            chdir( folder )
+            print( hyphens, folder )
+            allFolderds = walk( folder ).__next__()[1]
+            if len( allFolderds ) != 0:
+                for i in allFolderds:
+                    subFolderPath = folder + "\\" + i
+                    tree( subFolderPath, hyphens + "--" )
+            allFiles = walk( folder ).__next__()[2]
+            hyphens += '--'
 
-    def tree(folder, hyphens):
-        chdir( folder )
-        print( hyphens, folder )
-        allFolderds = walk( folder ).__next__()[1]
-        if len( allFolderds ) != 0:
-            for i in allFolderds:
-                subFolderPath = folder + "\\" + i
-                tree( subFolderPath, hyphens + "--" )
-        allFiles = walk( folder ).__next__()[2]
-        hyphens += '--'
+            if len( allFiles ) != 0:
+                for i in allFiles:
+                    print( hyphens, i )
+            chdir( ".." )
 
-        if len( allFiles ) != 0:
-            for i in allFiles:
-                print( hyphens, i )
-        chdir( ".." )
+        tree( getcwd(), "" )
+        main()
 
 
-    tree( getcwd(), "" )
+
 
     def main():
         global userInput
@@ -197,7 +200,7 @@ while stillGoOn:
         elif userInput=="rm":
             rm()
         elif userInput=="tree":
-            tree( getcwd(), "" )
+            prinTree(  )
         elif userInput=="x":
             stillGoOn=False
 
